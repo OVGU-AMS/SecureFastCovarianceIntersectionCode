@@ -18,15 +18,15 @@ TO_PLOT = True
 def runSim():
     """Based on the imported network file, create the correct sensor(s), server, and client, and then run the simulation."""
 
-    sensors, server, client = ntwrk.setupSim()
+    groundTruth, sensors, server, client = ntwrk.setupSim()
 
     # The simulation itself
     time = 0
     while time < NUM_TIME_TICKS:
         print ('Sim time = ' + str(time))
-
+        trueState = next(groundTruth)
         # Readings are gotten by generating a reading from each of the sensors in the list created
-        readings = [s.generateDataAndDisplay(time) for s in sensors]
+        readings = [s.generateDataAndDisplay(time, trueState) for s in sensors]
         # Info to send to server (may include encrypting readings) is computed by each sensor for its generated reading
         infoToSendToServer = [s.getDataToSendToServerAndDisplay(time, p) for s,p in zip(sensors, readings)]
         # Info to send to client (may be processed sensor readings) is computed by the server

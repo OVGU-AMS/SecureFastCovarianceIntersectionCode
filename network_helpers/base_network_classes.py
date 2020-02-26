@@ -11,7 +11,7 @@ class LoggingAgent():
 
     def log(self, msg):
         if self._toLog:
-            print(self._name + ": " + str(msg))
+            print(str(self._name) + ": " + str(msg))
         return
 
 class PlottingAgent(LoggingAgent):
@@ -39,8 +39,8 @@ class PlottingAgent(LoggingAgent):
 
 class SensorBase(PlottingAgent):
     """The base class for a sensor. Logs and plots generated data, and processes and logs data to be sent to the server."""
-    def generateDataAndDisplay(self, time):
-        d = self.generateData(time)
+    def generateDataAndDisplay(self, time, groundTruth):
+        d = self.generateData(time, groundTruth)
         self.log('Observed data: ' + str(d))
         self.plot(time, d, self._plotter)
         return d
@@ -51,7 +51,7 @@ class SensorBase(PlottingAgent):
         self.plotSent(time, d, self._plotter)
         return d
     
-    def generateData(self, time):
+    def generateData(self, time, groundTruth):
         raise NotImplementedError
 
     def getDataToSendToServer(self, time, data):

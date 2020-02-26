@@ -5,8 +5,8 @@ from mpl_toolkits.mplot3d import Axes3D
 
 PLOT = False
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
+# fig = plt.figure()
+# ax = fig.add_subplot(111, projection='3d')
 
 
 def omega_exact(sensor_traces):
@@ -51,16 +51,16 @@ def omega_estimates(sensor_lists, step):
         projection = (np.dot(to_project, to_project_onto)/np.dot(to_project_onto, to_project_onto)) * to_project_onto
         norm_to_hyperplane = to_project - projection
 
-        # Some debug plotting
-        if PLOT and i==0:
-            ax.plot(*zip(avg_known_points, relevant_known_point), c='b')
-            ax.scatter(*avg_known_points, marker='^', c='b')
+        # # Some debug plotting
+        # if PLOT and i==0:
+        #     ax.plot(*zip(avg_known_points, relevant_known_point), c='b')
+        #     ax.scatter(*avg_known_points, marker='^', c='b')
 
-            ax.plot(*zip(avg_known_points, computed_point), c='r')
-            ax.scatter(*computed_point, marker='^', c='r')
+        #     ax.plot(*zip(avg_known_points, computed_point), c='r')
+        #     ax.scatter(*computed_point, marker='^', c='r')
             
-            ax.plot(*zip(computed_point, computed_point+norm_to_hyperplane), c='g')
-            ax.scatter(*computed_point+norm_to_hyperplane, marker='^', c='g')
+        #     ax.plot(*zip(computed_point, computed_point+norm_to_hyperplane), c='g')
+        #     ax.scatter(*computed_point+norm_to_hyperplane, marker='^', c='g')
 
         # Add the computed point to the partial solution hyperplane point list, completing the list
         hyperplane_points.append(computed_point)
@@ -86,9 +86,9 @@ def omega_estimates(sensor_lists, step):
     #print(sensor_hyperplanes_intercepts)
     #print(sensor_hyperplanes)
 
-    if PLOT:
-        ax.scatter(*zip(*[(a,b,c) for a in np.arange(0,1.1,0.1) for b in np.arange(0,1.1,0.1) for c in np.arange(0,1.1,0.1) if np.isclose(a+b+c, 1)]), c='grey')
-        plt.show()
+    # if PLOT:
+    #     ax.scatter(*zip(*[(a,b,c) for a in np.arange(0,1.1,0.1) for b in np.arange(0,1.1,0.1) for c in np.arange(0,1.1,0.1) if np.isclose(a+b+c, 1)]), c='grey')
+    #     plt.show()
 
     return omegas
 
