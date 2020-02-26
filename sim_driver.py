@@ -36,7 +36,7 @@ def runSim():
 
         # If plotting, this will display the point incrementally as they are computed
         if TO_PLOT:
-            plt.pause(0.1)
+            plt.pause(0.05)
 
         # Increase the time step and repeat the process
         time+=1

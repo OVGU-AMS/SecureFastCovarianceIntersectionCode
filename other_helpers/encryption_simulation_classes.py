@@ -31,10 +31,15 @@ class Add_PHE_Number:
         self.mults = mults
     
     def __add__(self, other):
-        return Add_PHE_Number(self.number + other)
+        res = None
+        if isinstance(other, Add_PHE_Number):
+            res = Add_PHE_Number(self.number + other.number)
+        else:
+            res = Add_PHE_Number(self.number + other)
+        return res
     
     def __radd__(self, other):
-        return Add_PHE_Number(self.__add__(other))
+        return self.__add__(other)
     
     def __mul__(self, other):
         if isinstance(other, Add_PHE_Number):
@@ -42,7 +47,7 @@ class Add_PHE_Number:
         return Add_PHE_Number(self.number*other, mults=self.mults+1)
     
     def __rmul__(self, other):
-        return Add_PHE_Number(self.__mul__(other))
+        return self.__mul__(other)
     
     def get_number(self):
         return self.number

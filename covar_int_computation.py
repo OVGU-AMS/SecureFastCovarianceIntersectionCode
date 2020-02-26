@@ -37,11 +37,15 @@ def omega_estimates(sensor_lists, step):
             known_point[j] = 1
             hyperplane_points.append(known_point)
         
-        # Find the remaing unkonwn partial solution hyperplane point - when all omega values (except for current and next sensor) are 0. log(p) run time.
+        # Find the remaing unknown partial solution hyperplane point - when all omega values (except for current and next sensor) are 0. log(p) run time.
         list_a = sensor_lists[i]
         list_b = list(reversed(sensor_lists[i+1]))
         om = intersect_approx(list_a, list_b, step)
         computed_point = np.array([0]*i + [om, 1-om] + [0]*(num_sensors-2-i))
+
+        # Special case with 2 sensors, the computed point is in fact the solution list of omegas
+        if num_sensors==2:
+            return computed_point
 
         # Get the normal to the hyperplane defined by all the known points, and the computed point above
         avg_known_points = np.mean(hyperplane_points, axis=0)
@@ -123,7 +127,7 @@ def intersect_exact(increasing_cmp_list, decreasing_cmp_list, step):
     return dec/(inc+dec)
 
 
-sensor_traces = [4.254, 7.111, 6.234, 2.23, 8.23423, 9.1]
-disc_step = 0.1
-print('Exact solution: ', ['%1.4f'%i for i in omega_exact(sensor_traces)])
-print('Approx solution:', ['%1.4f'%i for i in omega_estimates([[w*i for w in np.arange(0, 1+disc_step, disc_step)] for i in sensor_traces], disc_step)])
+# sensor_traces = [4.254, 7.111, 6.234, 2.23, 8.23423, 9.1]
+# disc_step = 0.1
+# print('Exact solution: ', ['%1.4f'%i for i in omega_exact(sensor_traces)])
+# print('Approx solution:', ['%1.4f'%i for i in omega_estimates([[w*i for w in np.arange(0, 1+disc_step, disc_step)] for i in sensor_traces], disc_step)])

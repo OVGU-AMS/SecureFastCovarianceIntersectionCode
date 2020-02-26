@@ -5,13 +5,28 @@
 import functools as ft
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 
 import network_helpers.base_network_classes as bnc
 import other_helpers.plotting_helper as ph
 import other_helpers.encryption_simulation_classes as enc
 import covar_int_computation as fci
 
+"""
+ .d8888b.
+d88P  Y88b
+Y88b.
+ "Y888b.    .d88b.  88888b.  .d8888b   .d88b.  888d888
+    "Y88b. d8P  Y8b 888 "88b 88K      d88""88b 888P"
+      "888 88888888 888  888 "Y8888b. 888  888 888
+Y88b  d88P Y8b.     888  888      X88 Y88..88P 888
+ "Y8888P"   "Y8888  888  888  88888P'  "Y88P"  888
+
+
+
+"""
 class MovingObjectSmartSensor(bnc.SensorBase):
+    curId = 0
     def __init__(self, name, 
                 trueMeasurementTransition,
                 trueMeasurementErrorMean,
@@ -42,6 +57,13 @@ class MovingObjectSmartSensor(bnc.SensorBase):
 
         # Used for fusion approximation
         self.omegaStep = omegaStep
+        self.id = MovingObjectSmartSensor.curId
+        MovingObjectSmartSensor.curId+=1
+
+        # Used for plotting colour
+        offset = 1 # Simple way to affect the chosen colours a bit
+        self.colourId = list(mcolors.TABLEAU_COLORS.values())[self.id+offset%len(mcolors.TABLEAU_COLORS)]
+        
         return
 
     def generateData(self, t, groundTruth):
@@ -66,6 +88,7 @@ class MovingObjectSmartSensor(bnc.SensorBase):
             self.P = self.Q
             return self.truePrevState, measurement, self.x, self.P
         
+        # TODO would be faster for encryption is the following with done in the information filter form, with the appropriate variables saved
         # Prediction
         self.x = self.F@self.x
         self.P = self.Q + (self.F@self.P@self.F.T)
@@ -82,13 +105,29 @@ class MovingObjectSmartSensor(bnc.SensorBase):
         return self.truePrevState, measurement, self.x, self.P
     
     def getDataToSendToServer(self, t, p):
-        # TODO ORE and PHE and send those
-        #trace = np.trace(self.P)
-        return self.x, self.P
+        # Nothing to process on the first time step
+        if t==0:
+            return None, None, None, None, None
+
+        trace = np.trace(self.P)
+        oreTraces = []
+        # TODO don't really have to send first discretisation (om=0) since it's always the same
+        for om in np.arange(0, 1+self.omegaStep, self.omegaStep):
+            oreTraces.append(enc.ORE_Number(om*trace, 'L' if self.id%2==0 else 'R'))
+        
+        Pinv = np.linalg.inv(self.P)
+        Pinvx = Pinv@self.x
+
+        phePinv = np.array([[enc.Add_PHE_Number(val) for val in r] for r in Pinv])
+        phePinvx = np.array([enc.Add_PHE_Number(val) for val in Pinvx])
+        
+        # Send both plaintext and encryptions for simulation comparison
+        return self.x, self.P, phePinvx, phePinv, oreTraces
     
     def plotData(self, t, d, plotter):
+        if t%5!=0:
+            return
         true, measurement, state, error = d
-        colour_to_plot = 'C'+str(self._name)
 
         # Only the first sensor should plot the ground truth
         if self._name == 0:
@@ -96,16 +135,29 @@ class MovingObjectSmartSensor(bnc.SensorBase):
             plotter.scatter(true2D[0], true2D[1], c='lightgrey', marker='.')
         
         # Both should plot their measurement
-        plotter.scatter(measurement[0], measurement[1], c=colour_to_plot, marker='x')
+        plotter.scatter(measurement[0], measurement[1], c=self.colourId, marker='x')
 
         # State and error estimates only made after first time step
         if t > 0:
             state2D = np.array([state[0], state[2]])
             error2D = np.array([[error[0,0], error[2,0]],[error[0,2],error[2,2]]])
-            plotter.scatter(state2D[0], state2D[1], c=colour_to_plot, marker='.')
-            plotter.add_artist(ph.get_cov_ellipse(error2D, state2D, 2, fill=False, linestyle='-', edgecolor=colour_to_plot))
+            plotter.scatter(state2D[0], state2D[1], c=self.colourId, marker='.')
+            plotter.add_artist(ph.get_cov_ellipse(error2D, state2D, 2, fill=False, linestyle='-', edgecolor=self.colourId))
         return
 
+"""
+ .d8888b.
+d88P  Y88b
+Y88b.
+ "Y888b.    .d88b.  888d888 888  888  .d88b.  888d888
+    "Y88b. d8P  Y8b 888P"   888  888 d8P  Y8b 888P"
+      "888 88888888 888     Y88  88P 88888888 888
+Y88b  d88P Y8b.     888      Y8bd8P  Y8b.     888
+ "Y8888P"   "Y8888  888       Y88P    "Y8888  888
+
+
+
+"""
 class FCIFusionServer(bnc.ServerBase):
     def __init__(self, name, 
                 omegaStep, 
@@ -115,36 +167,88 @@ class FCIFusionServer(bnc.ServerBase):
         return
     
     def getDataToSendToClientFromSensorDataList(self, time, sensorDataList):
+        # No estimate on first time step
         if time == 0:
-            return None, None
+            return None, None, None, None
         
+        # Compute the exact fast covariance intersection
         traces = []
-        for _,P in sensorDataList:
+        for _,P,_,_,_ in sensorDataList:
             traces.append(np.trace(P))
-
         omegas = fci.omega_exact(traces)
-
         Pinv_fused = sum([np.linalg.inv(sensorDataList[i][1])*omegas[i] for i in range(len(sensorDataList))])
         Pinvx_fused = sum([np.linalg.inv(sensorDataList[i][1])@sensorDataList[i][0]*omegas[i] for i in range(len(sensorDataList))])
         P_fused = np.linalg.inv(Pinv_fused)
         x_fused = P_fused@Pinvx_fused
-        return x_fused, P_fused
+
+        # Compute the approximate secure fast covariance intersection
+        sensorLists = []
+        for _,_,_,_,oreList in sensorDataList:
+            sensorLists.append(oreList)
+        approxOmegas = fci.omega_estimates(sensorLists, self.omegaStep)
+        Pinv_fused_approx = sum([sensorDataList[i][3]*approxOmegas[i] for i in range(len(sensorDataList))])
+        Pinvx_fused_approx = sum([sensorDataList[i][2]*approxOmegas[i] for i in range(len(sensorDataList))])
+
+        print('Exact solution: ', ['%1.4f'%i for i in omegas])
+        print('Approx solution:', ['%1.4f'%i for i in approxOmegas])
+
+        return x_fused, P_fused, Pinvx_fused_approx, Pinv_fused_approx
+
+"""
+ .d8888b.  888 d8b                   888
+d88P  Y88b 888 Y8P                   888
+888    888 888                       888
+888        888 888  .d88b.  88888b.  888888
+888        888 888 d8P  Y8b 888 "88b 888
+888    888 888 888 88888888 888  888 888
+Y88b  d88P 888 888 Y8b.     888  888 Y88b.
+ "Y8888P"  888 888  "Y8888  888  888  "Y888
 
 
+
+"""
 class FusionQueryClient(bnc.ClientBase):
     def processServerData(self, time, serverData):
-        x, P = serverData
-        return x, P
+        if time==0:
+            return None, None, None, None
+        x, P, Pinvx, Pinv = serverData
+        approxP = np.linalg.inv(np.array([[val.get_number() for val in r] for r in Pinv]))
+        approxX = approxP@np.array([val.get_number() for val in Pinvx])
+        return x, P, approxX, approxP
     
     def plotData(self, t, d, plotter):
-        state, error = d
+        if t%5!=0:
+            return
+        state, error, approxState, approxError = d
+        trueColour = mcolors.CSS4_COLORS['cyan']
+        approxColour = mcolors.CSS4_COLORS['darkcyan']
         if t > 1:
+            # Normal fast covariance intersection plot
             state2D = np.array([state[0], state[2]])
             error2D = np.array([[error[0,0], error[2,0]],[error[0,2],error[2,2]]])
-            plotter.scatter(state2D[0], state2D[1], c='green', marker='.')
-            plotter.add_artist(ph.get_cov_ellipse(error2D, state2D, 2, fill=False, linestyle='-', edgecolor="green"))
+            plotter.scatter(state2D[0], state2D[1], c=trueColour, marker='.')
+            plotter.add_artist(ph.get_cov_ellipse(error2D, state2D, 2, fill=False, linestyle='-', edgecolor=trueColour))
+
+            # Secure fast covariance plot
+            approxState2D = np.array([approxState[0], approxState[2]])
+            approxError2D = np.array([[approxError[0,0], approxError[2,0]],[approxError[0,2],approxError[2,2]]])
+            plotter.scatter(approxState2D[0], approxState2D[1], c=approxColour, marker='.')
+            plotter.add_artist(ph.get_cov_ellipse(approxError2D, approxState2D, 2, fill=False, linestyle='-', edgecolor=approxColour))
         return
 
+"""
+ .d8888b. 88888888888
+d88P  Y88b    888
+888    888    888
+888           888
+888  88888    888
+888    888    888
+Y88b  d88P    888
+ "Y8888P88    888
+
+
+
+"""
 # An iterator for the ground truth
 class GroundTruth:
     def __init__(self,
@@ -171,6 +275,19 @@ class GroundTruth:
         return self.truePrevState
 
 
+"""
+ .d8888b.  d8b                         .d8888b.           888
+d88P  Y88b Y8P                        d88P  Y88b          888
+Y88b.                                 Y88b.               888
+ "Y888b.   888 88888b.d88b.            "Y888b.    .d88b.  888888 888  888 88888b.
+    "Y88b. 888 888 "888 "88b              "Y88b. d8P  Y8b 888    888  888 888 "88b
+      "888 888 888  888  888                "888 88888888 888    888  888 888  888
+Y88b  d88P 888 888  888  888 d8b      Y88b  d88P Y8b.     Y88b.  Y88b 888 888 d88P
+ "Y8888P"  888 888  888  888 Y8P       "Y8888P"   "Y8888   "Y888  "Y88888 88888P"
+                                                                          888
+                                                                          888
+                                                                          888
+"""
 # A multi sensor fusion server network
 def setupSim():
     fig = plt.figure()
@@ -213,15 +330,15 @@ def setupSim():
                                         measurementTransition, 
                                         measurementErrorCov, 
                                         omegaStep, 
-                                        ax, True, True)
+                                        ax, False, True)
         sensors.append(sensor)
     
     # Define fusion server
     server = FCIFusionServer('server', 
                              omegaStep, 
-                             ax, True)
+                             ax, False)
     
     # Define query client
-    client = FusionQueryClient('client', ax, True, True)
+    client = FusionQueryClient('client', ax, False, True)
 
     return iter(groundTruth), sensors, server, client
