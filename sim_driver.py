@@ -18,7 +18,7 @@ TO_PLOT = True
 def runSim():
     """Based on the imported network file, create the correct sensor(s), server, and client, and then run the simulation."""
 
-    groundTruth, sensors, server, client = ntwrk.setupSim()
+    groundTruth, sensors, server, client, finaliser = ntwrk.setupSim()
 
     # The simulation itself
     time = 0
@@ -41,6 +41,8 @@ def runSim():
         # Increase the time step and repeat the process
         time+=1
     
+    finaliser.end_sim()
+
     # If plotting, keep the window open when simulation finishes
     if TO_PLOT:
         plt.show()

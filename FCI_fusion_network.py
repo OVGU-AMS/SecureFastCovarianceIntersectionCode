@@ -1,7 +1,7 @@
 """
 
 """
-
+import pickle as pkl
 import functools as ft
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,6 +11,14 @@ import network_helpers.base_network_classes as bnc
 import other_helpers.plotting_helper as ph
 import other_helpers.encryption_simulation_classes as enc
 import covar_int_computation as fci
+
+# Horrid global shortcut to make post plotting doable quickly
+# TODO remove this shit and implement properly
+saved_sim_output = {'ground_truth': [],
+                    'measurements': {},
+                    'sensor_estimates': {},
+                    'fusion_estimates': [],
+                    'secure_fusion_estimates': []}
 
 """
  .d8888b.
@@ -35,6 +43,8 @@ class MovingObjectSmartSensor(bnc.SensorBase):
                 stateErrorCov,
                 measurementTransition,
                 measurementErrorCov, 
+                initState,
+                initErrorCov,
                 omegaStep, 
                 plotter, toLog=True, toPlot=True):
         super().__init__(name, plotter, toLog, toPlot)
@@ -51,8 +61,8 @@ class MovingObjectSmartSensor(bnc.SensorBase):
         self.Q = stateErrorCov
         self.H = measurementTransition
         self.R = measurementErrorCov
-        self.x = None
-        self.P = None
+        self.x = initState
+        self.P = initErrorCov
         self.inits = []
 
         # Used for fusion approximation
@@ -64,6 +74,9 @@ class MovingObjectSmartSensor(bnc.SensorBase):
         offset = 1 # Simple way to affect the chosen colours a bit
         self.colourId = list(mcolors.TABLEAU_COLORS.values())[self.id+offset%len(mcolors.TABLEAU_COLORS)]
         
+        saved_sim_output['sensor_estimates'][name] = []
+        saved_sim_output['measurements'][name] = []
+
         return
 
     def generateData(self, t, groundTruth):
@@ -73,20 +86,21 @@ class MovingObjectSmartSensor(bnc.SensorBase):
         # Measure the true state according to model
         measureError = np.random.multivariate_normal(self.trueMeasurementErrorMean, self.trueMeasurementErrorCov)
         measurement = self.trueMeasurementTransition@self.truePrevState + measureError
+        saved_sim_output['measurements'][self._name].append(measurement)
 
         # ===== Filter true measurement
         # Special case at the start, compute initial from first 2 measurements
-        if t == 0:
-            self.inits.append(measurement)
-            return self.truePrevState, measurement, None, None
-        if t == 1:
-            self.inits.append(measurement)
-            # Now that we have the first 2 measurements, we can create the believed initial state
-            # Make the initial x, y position be the second measurement that was gotten
-            # Make the initial x, y velocity be computed from the distance between the first and second measurements that were gotten
-            self.x = np.array([self.inits[1][0], (self.inits[1][0] - self.inits[0][0])/self.F[0][1], self.inits[1][1], (self.inits[1][1] - self.inits[0][1])/self.F[0][1]])
-            self.P = self.Q
-            return self.truePrevState, measurement, self.x, self.P
+        # if t == 0:
+        #     self.inits.append(measurement)
+        #     return self.truePrevState, measurement, None, None
+        # if t == 1:
+        #     self.inits.append(measurement)
+        #     # Now that we have the first 2 measurements, we can create the believed initial state
+        #     # Make the initial x, y position be the second measurement that was gotten
+        #     # Make the initial x, y velocity be computed from the distance between the first and second measurements that were gotten
+        #     self.x = np.array([self.inits[1][0], (self.inits[1][0] - self.inits[0][0])/self.F[0][1], self.inits[1][1], (self.inits[1][1] - self.inits[0][1])/self.F[0][1]])
+        #     self.P = self.Q
+        #     return self.truePrevState, measurement, self.x, self.P
         
         # TODO would be faster for encryption is the following with done in the information filter form, with the appropriate variables saved
         # Prediction
@@ -102,6 +116,7 @@ class MovingObjectSmartSensor(bnc.SensorBase):
         self.x = self.x + K@(measurement - self.H@self.x)
         self.P = self.P - (K@S@K.T)
 
+        saved_sim_output['sensor_estimates'][self._name].append((self.x, self.P))
         return self.truePrevState, measurement, self.x, self.P
     
     def getDataToSendToServer(self, t, p):
@@ -125,8 +140,6 @@ class MovingObjectSmartSensor(bnc.SensorBase):
         return self.x, self.P, phePinvx, phePinv, oreTraces
     
     def plotData(self, t, d, plotter):
-        if t%5!=0:
-            return
         true, measurement, state, error = d
 
         # Only the first sensor should plot the ground truth
@@ -214,11 +227,12 @@ class FusionQueryClient(bnc.ClientBase):
         x, P, Pinvx, Pinv = serverData
         approxP = np.linalg.inv(np.array([[val.get_number() for val in r] for r in Pinv]))
         approxX = approxP@np.array([val.get_number() for val in Pinvx])
+
+        saved_sim_output['fusion_estimates'].append((x, P))
+        saved_sim_output['secure_fusion_estimates'].append((approxX, approxP))
         return x, P, approxX, approxP
     
     def plotData(self, t, d, plotter):
-        if t%5!=0:
-            return
         state, error, approxState, approxError = d
         trueColour = mcolors.CSS4_COLORS['cyan']
         approxColour = mcolors.CSS4_COLORS['darkcyan']
@@ -237,14 +251,14 @@ class FusionQueryClient(bnc.ClientBase):
         return
 
 """
- .d8888b. 88888888888
-d88P  Y88b    888
-888    888    888
-888           888
-888  88888    888
-888    888    888
-Y88b  d88P    888
- "Y8888P88    888
+ .d8888b.     88888888888
+d88P  Y88b        888
+888    888        888
+888               888
+888  88888        888
+888    888        888
+Y88b  d88P d8b    888  d8b
+ "Y8888P88 Y8P    888  Y8P
 
 
 
@@ -272,7 +286,32 @@ class GroundTruth:
             signalError = np.random.multivariate_normal(self.trueStateErrorMean, self.trueStateErrorCov)
             self.truePrevState = self.trueStateTransition@self.truePrevState + signalError
         self.time+=1
+        saved_sim_output['ground_truth'].append(self.truePrevState)
         return self.truePrevState
+
+
+"""
+8888888888 d8b
+888        Y8P
+888
+8888888    888 88888b.
+888        888 888 "88b
+888        888 888  888
+888        888 888  888 d8b
+888        888 888  888 Y8P
+
+
+
+"""
+class Finaliser:
+    def __init__(self):
+        return
+    
+    def end_sim(self):
+        pkl.dump(saved_sim_output, open( "simout.p", "wb" ))
+        return
+
+
 
 
 """
@@ -299,7 +338,7 @@ def setupSim():
     stateTransition = np.array([[1, t, 0, 0],[0, 1, 0, 0],[0, 0, 1, t],[0, 0, 0, 1]])
     stateErrorMean = np.array([0,0,0,0])
     stateErrorCov = q*np.array([[t**3/3,t**2/2,0,0],[t**2/2,t,0,0],[0,0,t**3/3,t**2/2],[0,0,t**2/2,t]])
-    initState = np.array([0,1,0,1])
+    initState = np.array([0,0.5,0,0.5])
 
     # Ground truth iterator
     groundTruth = GroundTruth(stateTransition, 
@@ -320,6 +359,9 @@ def setupSim():
         measurementTransition = np.array([[1, 0, 0, 0],[0, 0, 1, 0]])
         measurementErrorMean = np.array([0,0])
         measurementErrorCov = np.array([[xMeasureErrorStdDev**2, 0], [0, yMeasureErrorStdDev**2]])
+
+        sensorInitState = initState+np.random.rand(4)
+        sensorInitErrorCov = stateTransition*(1+0.2*np.random.rand(4,4))
         
         sensor = MovingObjectSmartSensor(i,
                                         measurementTransition, 
@@ -329,6 +371,8 @@ def setupSim():
                                         stateErrorCov, 
                                         measurementTransition, 
                                         measurementErrorCov, 
+                                        sensorInitState,
+                                        sensorInitErrorCov,
                                         omegaStep, 
                                         ax, False, True)
         sensors.append(sensor)
@@ -341,4 +385,4 @@ def setupSim():
     # Define query client
     client = FusionQueryClient('client', ax, False, True)
 
-    return iter(groundTruth), sensors, server, client
+    return iter(groundTruth), sensors, server, client, Finaliser()

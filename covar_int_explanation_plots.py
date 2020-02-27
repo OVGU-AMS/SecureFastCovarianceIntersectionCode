@@ -43,7 +43,8 @@ d88P"                 "888 88888888 888  888 "Y8888b. 888  888 888          888 
 
 """
 fig = plt.figure()
-fig.set_size_inches(w=FIG_WIDTH, h=FIG_HIGHT)
+# Overwrite hieght on this plot
+fig.set_size_inches(w=FIG_WIDTH, h=2.7)
 ax = fig.add_subplot(111)
 
 w_quant = 0.1
@@ -92,6 +93,7 @@ plt.xlabel(r'$\omega$')
 ax.set_title('Fast covariance intersection')
 
 plt.legend(fontsize=FONT_SIZE, numpoints=1)
+plt.tight_layout()
 if SAVE_PICS:
     plt.savefig('images/2_sensors.pgf')
 if SHOW_PICS:
@@ -141,6 +143,7 @@ ax.scatter([sol1, 0],[1-sol1, 0],[0, 1], c='g', marker='x', depthshade=False)
 
 solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2,0.2), marker = 'o')
 ax.legend([solutionSurfaceFakeLine, sol1Line], [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ partial solution'], numpoints=1, loc=1, fontsize=FONT_SIZE)
+plt.tight_layout()
 if SAVE_PICS:
     plt.savefig('images/partial_sol1.pgf')
 if SHOW_PICS:
@@ -197,6 +200,7 @@ solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2
 ax.legend([solutionSurfaceFakeLine, sol1Line, sol2Line], 
           [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ partial solution', r'$\omega_1$, $\omega_2$ partial solution'], numpoints=1, loc=1, fontsize=FONT_SIZE)
 
+plt.tight_layout()
 if SAVE_PICS:
     plt.savefig('images/partial_sols.pgf')
 if SHOW_PICS:
@@ -331,6 +335,7 @@ partialSol2FakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.2,0.2,0.7
 ax.legend([solutionSurfaceFakeLine, partialSol1FakeLine, partialSol2FakeLine], 
           [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ solution plane', r'$\omega_1$, $\omega_2$ solution plane'], numpoints=1, loc=1, fontsize=FONT_SIZE)
 
+plt.tight_layout()
 if SAVE_PICS:
     plt.savefig('images/partial_sol_planes.pgf')
 if SHOW_PICS:
