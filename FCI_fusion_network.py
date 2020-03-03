@@ -350,15 +350,16 @@ def setupSim():
     omegaStep = 0.1
 
     # Define sensors
-    num_sensors = 2
+    num_sensors = 3
     sensors = []
     for i in range(num_sensors):
         # Have different measurement parameters for different sensors
         xMeasureErrorStdDev = 0.5 + 0.5*np.random.rand()
         yMeasureErrorStdDev = 0.5 + 0.5*np.random.rand()
+        xyMeasuremErrorCov = 0.5*np.random.rand()
         measurementTransition = np.array([[1, 0, 0, 0],[0, 0, 1, 0]])
         measurementErrorMean = np.array([0,0])
-        measurementErrorCov = np.array([[xMeasureErrorStdDev**2, 0], [0, yMeasureErrorStdDev**2]])
+        measurementErrorCov = np.array([[xMeasureErrorStdDev**2, xyMeasuremErrorCov], [xyMeasuremErrorCov, yMeasureErrorStdDev**2]])
 
         sensorInitState = initState+np.random.rand(4)
         sensorInitErrorCov = stateTransition*(1+0.2*np.random.rand(4,4))
