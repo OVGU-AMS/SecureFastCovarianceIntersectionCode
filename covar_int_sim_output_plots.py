@@ -188,18 +188,25 @@ ax.set_title(r'FCI and SecFCI comparison')
 ax.plot(*zip(*[(x[0],x[2]) for x in gf_true[SKIP_FIRST*TIME_BETWEEN_PLOTS:(SKIP_FIRST+MAX_STEPS)*TIME_BETWEEN_PLOTS]]), c='lightgrey', marker='.', zorder=1)
 
 # Measurements 1
-ax.scatter(*zip(*[(x[0],x[1]) for x in sim_data['measurements'][0]]), c='limegreen', marker='x', label=r'Sensor 1', zorder=2)
+ax.scatter(*zip(*[(x[0],x[1]) for x in sim_data['measurements'][0]]), c='limegreen', marker='x', label=r'Sensor 0', zorder=2)
 # Lines from gt to measurements
 m1 = list(zip(sim_data['ground_truth'], sim_data['measurements'][0]))
 for i in range(len(m1)):
     ax.plot([m1[i][0][0], m1[i][1][0]], [m1[i][0][2], m1[i][1][1]], c='lightgrey', linestyle='--', zorder=3)
 
 # Measurements 2
-ax.scatter(*zip(*[(x[0],x[1]) for x in sim_data['measurements'][1]]), c='cornflowerblue', marker='x', label=r'Sensor 2', zorder=2)
+ax.scatter(*zip(*[(x[0],x[1]) for x in sim_data['measurements'][1]]), c='cornflowerblue', marker='x', label=r'Sensor 1', zorder=2)
 # Lines from gt to measurements
 m2 = list(zip(sim_data['ground_truth'], sim_data['measurements'][1]))
 for i in range(len(m2)):
     ax.plot([m2[i][0][0], m2[i][1][0]], [m2[i][0][2], m2[i][1][1]], c='lightgrey', linestyle='--', zorder=3)
+
+# Measurements 3
+ax.scatter(*zip(*[(x[0],x[1]) for x in sim_data['measurements'][2]]), c='orange', marker='x', label=r'Sensor 2', zorder=2)
+# Lines from gt to measurements
+m3 = list(zip(sim_data['ground_truth'], sim_data['measurements'][2]))
+for i in range(len(m3)):
+    ax.plot([m3[i][0][0], m3[i][1][0]], [m3[i][0][2], m3[i][1][1]], c='lightgrey', linestyle='--', zorder=3)
 
 # FCI estimates
 split = list(zip(*sim_data['fusion_estimates']))
