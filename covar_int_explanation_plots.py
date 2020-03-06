@@ -77,8 +77,8 @@ l = w_steps[l]
 r = w_steps[r]
 
 
-ax.plot(w_steps, A, marker='.', c='g', label=r'$tr(P_0^{-1})\omega$', zorder=3)
-ax.plot(w_steps, B, marker='.', c='b', label=r'$tr(P_1^{-1})(1-\omega)$', zorder=3)
+ax.plot(w_steps, A, marker='.', c='g', label=r'$tr(P_0)\omega$', zorder=3)
+ax.plot(w_steps, B, marker='.', c='b', label=r'$tr(P_1)(1-\omega)$', zorder=3)
 #ax.plot([trB/(trA+trB), trB/(trA+trB)],[0, trB/(trA+trB)*trA], linestyle='--', c='r')
 #ax.scatter([trB/(trA+trB)],[trB/(trA+trB)*trA], marker='x', c='r', zorder=10)
 
