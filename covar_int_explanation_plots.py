@@ -143,7 +143,7 @@ ax.scatter([sol1, 0],[1-sol1, 0],[0, 1], c='g', marker='x', depthshade=False)
 
 solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2,0.2), marker = 'o')
 ax.legend([solutionSurfaceFakeLine, sol1Line], [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ partial solution'], numpoints=1, loc=1, fontsize=FONT_SIZE)
-plt.tight_layout()
+plt.autoscale()
 if SAVE_PICS:
     plt.savefig('images/partial_sol1.pgf')
 if SHOW_PICS:
@@ -200,7 +200,7 @@ solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2
 ax.legend([solutionSurfaceFakeLine, sol1Line, sol2Line], 
           [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ partial solution', r'$\omega_1$, $\omega_2$ partial solution'], numpoints=1, loc=1, fontsize=FONT_SIZE)
 
-plt.tight_layout()
+plt.autoscale()
 if SAVE_PICS:
     plt.savefig('images/partial_sols.pgf')
 if SHOW_PICS:
@@ -335,7 +335,7 @@ partialSol2FakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.2,0.2,0.7
 ax.legend([solutionSurfaceFakeLine, partialSol1FakeLine, partialSol2FakeLine], 
           [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ solution plane', r'$\omega_1$, $\omega_2$ solution plane'], numpoints=1, loc=1, fontsize=FONT_SIZE)
 
-plt.tight_layout()
+plt.autoscale()
 if SAVE_PICS:
     plt.savefig('images/partial_sol_planes.pgf')
 if SHOW_PICS:
