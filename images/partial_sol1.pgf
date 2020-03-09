@@ -815,12 +815,6 @@
 \pgfsetfillcolor{textcolor}%
 \pgftext[x=1.794024in,y=2.294451in,left,base]{\color{textcolor}\rmfamily\fontsize{8.330000}{9.996000}\selectfont \(\displaystyle \omega_0\), \(\displaystyle \omega_1\) partial solution}%
 \end{pgfscope}%
-\begin{pgfscope}%
-\definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
-\pgfsetstrokecolor{textcolor}%
-\pgfsetfillcolor{textcolor}%
-\pgftext[x=1.700000in,y=2.940000in,,top]{\color{textcolor}\rmfamily\fontsize{12.000000}{14.400000}\selectfont First partial solution}%
-\end{pgfscope}%
 \end{pgfpicture}%
 \makeatother%
 \endgroup%

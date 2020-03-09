@@ -938,12 +938,6 @@
 \pgfpathclose%
 \pgfusepath{fill}%
 \end{pgfscope}%
-\begin{pgfscope}%
-\definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
-\pgfsetstrokecolor{textcolor}%
-\pgfsetfillcolor{textcolor}%
-\pgftext[x=1.700000in,y=2.940000in,,top]{\color{textcolor}\rmfamily\fontsize{12.000000}{14.400000}\selectfont Partial solutions as planes}%
-\end{pgfscope}%
 \end{pgfpicture}%
 \makeatother%
 \endgroup%

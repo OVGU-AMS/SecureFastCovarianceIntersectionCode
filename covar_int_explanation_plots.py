@@ -90,7 +90,7 @@ ax.scatter([0.5*(l+r)],[0], marker='x', c='r', zorder=1, label=r'Approx. solutio
 #plt.ylim(bottom=0)
 
 plt.xlabel(r'$\omega$')
-ax.set_title('Fast covariance intersection')
+#ax.set_title('Fast covariance intersection')
 
 plt.legend(fontsize=FONT_SIZE, numpoints=1)
 plt.tight_layout()
@@ -118,7 +118,7 @@ d8888        888   Y88b                 888    Y8P          888      d88P  Y88b 
 fig = plt.figure()
 fig.set_size_inches(w=FIG_WIDTH, h=FIG_HIGHT)
 ax = fig.add_subplot(111, projection='3d')
-fig.suptitle(r'First partial solution')
+#fig.suptitle(r'First partial solution')
 #ax.set_title(r'First Partial solution')
 
 ax.set_xlabel(r'$\omega_0$')
@@ -169,7 +169,7 @@ fig = plt.figure()
 fig.set_size_inches(w=FIG_WIDTH, h=FIG_HIGHT)
 ax = fig.add_subplot(111, projection='3d')
 
-fig.suptitle(r'All partial solutions')
+#fig.suptitle(r'All partial solutions')
 #ax.set_title(r'All partial solutions')
 
 ax.set_xlabel(r'$\omega_0$')
@@ -228,7 +228,7 @@ fig = plt.figure()
 fig.set_size_inches(w=FIG_WIDTH, h=FIG_HIGHT)
 ax = fig.add_subplot(111, projection='3d')
 
-fig.suptitle(r'Partial solutions as planes')
+#fig.suptitle(r'Partial solutions as planes')
 #ax.set_title(r'Partial solutions as planes')
 
 ax.set_xlabel(r'$\omega_0$')

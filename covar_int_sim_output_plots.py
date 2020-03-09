@@ -55,7 +55,7 @@ OMEGA_LIMIT_POINTS = 50
 fig = plt.figure()
 fig.set_size_inches(w=FIG_WIDTH, h=FIG_HIGHT)
 ax = fig.add_subplot(111)
-ax.set_title(r'FCI and SecFCI estimate traces')
+#ax.set_title(r'FCI and SecFCI estimate traces')
 
 # FCI estimates
 split = list(zip(*sim_data['fusion_estimates']))
@@ -99,7 +99,7 @@ Y88b. .d88P 888  888  888 Y8b.     Y88b 888 888  888      X88
 fig = plt.figure()
 fig.set_size_inches(w=FIG_WIDTH, h=FIG_HIGHT)
 ax = fig.add_subplot(111)
-ax.set_title(r'Difference in $\omega_i$ values')
+#ax.set_title(r'Difference in $\omega_i$ values')
 
 split1 = list(zip(*sim_data['sensor_estimates'][0]))
 errors1 = split1[1][:OMEGA_LIMIT_POINTS]
@@ -182,7 +182,7 @@ FIG_HIGHT = 3.4
 fig = plt.figure()
 fig.set_size_inches(w=FIG_WIDTH, h=FIG_HIGHT)
 ax = fig.add_subplot(111)
-ax.set_title(r'FCI and SecFCI comparison')
+#ax.set_title(r'FCI and SecFCI comparison')
 
 # Ground truth
 ax.plot(*zip(*[(x[0],x[2]) for x in gf_true[SKIP_FIRST*TIME_BETWEEN_PLOTS:(SKIP_FIRST+MAX_STEPS)*TIME_BETWEEN_PLOTS]]), c='lightgrey', marker='.', zorder=1)
