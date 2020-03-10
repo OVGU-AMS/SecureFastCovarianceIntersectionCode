@@ -23,8 +23,8 @@ else:
     SAVE_PICS = False
     SHOW_PICS = True
 
-FIG_WIDTH = 3.4
-FIG_HIGHT = 3
+FIG_WIDTH = 2.33
+FIG_HIGHT = 2.06
 
 FONT_SIZE = 'small'
 
@@ -43,8 +43,8 @@ d88P"                 "888 88888888 888  888 "Y8888b. 888  888 888          888 
 
 """
 fig = plt.figure()
-# Overwrite hieght on this plot
-fig.set_size_inches(w=FIG_WIDTH, h=2)
+# Overwrite size on this plot
+fig.set_size_inches(w=3.4, h=2)
 ax = fig.add_subplot(111)
 
 w_quant = 0.1
@@ -128,6 +128,7 @@ ax.set_xlabel(r'$\omega_0$')
 ax.set_ylabel(r'$\omega_1$')
 ax.set_zlabel(r'$\omega_2$')
 ax.view_init(elev=35, azim=2)
+ax.dist = 12
 
 # Solution plane
 xy = np.array([[1,0],
@@ -145,10 +146,20 @@ sol1Line, = ax.plot([sol1, 0],[1-sol1, 0],[0, 1], linestyle='--', c='g')
 ax.scatter([sol1, 0],[1-sol1, 0],[0, 1], c='g', marker='x', depthshade=False)
 
 solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2,0.2), marker = 'o')
-ax.legend([solutionSurfaceFakeLine, sol1Line], [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ partial solution'], numpoints=1, loc=1, fontsize=FONT_SIZE)
+l = ax.legend([solutionSurfaceFakeLine, sol1Line], [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ partial solution'], numpoints=1, loc=1, fontsize=FONT_SIZE)
+
+# Move the legend up slightly
+bb = l.get_bbox_to_anchor().inverse_transformed(ax.transAxes)
+bb.y0 += 0.15
+bb.y1 += 0.15
+l.set_bbox_to_anchor(bb, transform = ax.transAxes)
+
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.yaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.zaxis.set_tick_params(labelsize=FONT_SIZE)
+ax.xaxis.set_ticks([0,0.5,1])
+ax.yaxis.set_ticks([0,0.5,1])
+ax.zaxis.set_ticks([0,0.5,1])
 plt.autoscale()
 if SAVE_PICS:
     plt.savefig('images/partial_sol1.pgf')
@@ -182,6 +193,7 @@ ax.set_xlabel(r'$\omega_0$')
 ax.set_ylabel(r'$\omega_1$')
 ax.set_zlabel(r'$\omega_2$')
 ax.view_init(elev=35, azim=2)
+ax.dist = 12
 
 # Solution plane
 xy = np.array([[1,0],
@@ -203,12 +215,21 @@ sol2Line, = ax.plot([0, 1],[sol2, 0],[1-sol2, 0], linestyle='--', c='b')
 ax.scatter([0, 1],[sol2, 0],[1-sol2, 0], c='b', marker='x', depthshade=False)
 
 solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2,0.2), marker = 'o')
-ax.legend([solutionSurfaceFakeLine, sol1Line, sol2Line], 
+l = ax.legend([solutionSurfaceFakeLine, sol1Line, sol2Line], 
           [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ partial solution', r'$\omega_1$, $\omega_2$ partial solution'], numpoints=1, loc=1, fontsize=FONT_SIZE)
+
+# Move the legend up slightly
+bb = l.get_bbox_to_anchor().inverse_transformed(ax.transAxes)
+bb.y0 += 0.15
+bb.y1 += 0.15
+l.set_bbox_to_anchor(bb, transform = ax.transAxes)
 
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.yaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.zaxis.set_tick_params(labelsize=FONT_SIZE)
+ax.xaxis.set_ticks([0,0.5,1])
+ax.yaxis.set_ticks([0,0.5,1])
+ax.zaxis.set_ticks([0,0.5,1])
 plt.autoscale()
 if SAVE_PICS:
     plt.savefig('images/partial_sols.pgf')
@@ -244,6 +265,7 @@ ax.set_xlabel(r'$\omega_0$')
 ax.set_ylabel(r'$\omega_1$')
 ax.set_zlabel(r'$\omega_2$')
 ax.view_init(elev=35, azim=2)
+ax.dist = 12
 
 # Solution plane
 xy = np.array([[1,0],
@@ -342,12 +364,25 @@ solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2
 partialSol1FakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.2,0.7,0.2), marker = 'o')
 partialSol2FakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.2,0.2,0.7), marker = 'o')
 l = ax.legend([solutionSurfaceFakeLine, partialSol1FakeLine, partialSol2FakeLine], 
-          [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ solution plane', r'$\omega_1$, $\omega_2$ solution plane'], numpoints=1, loc=1, fontsize=FONT_SIZE)
+          [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ solution plane', r'$\omega_1$, $\omega_2$ solution plane'], 
+           numpoints=1,
+           #loc=1,
+           fontsize=FONT_SIZE)
+# Fixes issue plotting planes over th legend
 l.set_zorder(20)
+
+# Move the legend up slightly
+bb = l.get_bbox_to_anchor().inverse_transformed(ax.transAxes)
+bb.y0 += 0.15
+bb.y1 += 0.15
+l.set_bbox_to_anchor(bb, transform = ax.transAxes)
 
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.yaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.zaxis.set_tick_params(labelsize=FONT_SIZE)
+ax.xaxis.set_ticks([0,0.5,1])
+ax.yaxis.set_ticks([0,0.5,1])
+ax.zaxis.set_ticks([0,0.5,1])
 plt.autoscale()
 if SAVE_PICS:
     plt.savefig('images/partial_sol_planes.pgf')
