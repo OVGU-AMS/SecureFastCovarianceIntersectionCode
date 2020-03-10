@@ -21,7 +21,7 @@ if SAVE_NOT_SHOW:
     })
 
 FIG_WIDTH = 3.4
-FIG_HIGHT = 2.7
+FIG_HIGHT = 1.7
 FONT_SIZE = 'small'
 
 
@@ -62,7 +62,7 @@ split = list(zip(*sim_data['fusion_estimates']))
 estimates = split[0]
 errors = split[1]
 error_traces = [np.trace(p) for p in errors][:TRACE_LIMIT_POINTS]
-ax.plot(error_traces, c='r', label=r'$tr(P_{FCI})$', marker='.')
+ax.plot(error_traces, c='r', label=r'$tr(\mathbf{P}_{FCI})$', marker='.')
 
 
 # Secure FCI estimates
@@ -70,10 +70,12 @@ split = list(zip(*sim_data['secure_fusion_estimates']))
 estimates = split[0]
 errors = split[1]
 error_traces = [np.trace(p) for p in errors][:TRACE_LIMIT_POINTS]
-ax.plot(error_traces, c='b', label=r'$tr(P_{SecFCI})$', marker='.')
+ax.plot(error_traces, c='b', label=r'$tr(\mathbf{P}_{SecFCI})$', marker='.', linestyle='')
 
-plt.xlabel(r'Time')
-plt.legend()
+plt.xlabel(r'Time', fontsize=FONT_SIZE)
+plt.legend(fontsize=FONT_SIZE)
+ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
+ax.yaxis.set_tick_params(labelsize=FONT_SIZE)
 plt.tight_layout()
 if SAVE_NOT_SHOW:
     plt.savefig('images/traces_cmp.pgf')
@@ -136,10 +138,12 @@ diff = np.abs(np.array(split_omegas[0]) - np.array(split_approx_omegas[0])) + \
 er, = ax.plot([i for i in range(len(diff))], diff, c='grey', marker='.')
 
 ax.legend([(fci1,fci2,fci3),(secFci1,secFci2,secFci3),er], [r'FCI $\omega_i$', r'SecFCI $\omega_i$', r'Error'], 
-          numpoints=1, handler_map={tuple: HandlerTuple(ndivide=None)}, loc=1)
+          numpoints=1, handler_map={tuple: HandlerTuple(ndivide=None)}, loc=1, fontsize=FONT_SIZE)
 
-plt.xlabel(r'Time')
-plt.ylabel(r'Values of $\omega_i$')
+plt.xlabel(r'Time', fontsize=FONT_SIZE)
+plt.ylabel(r'Values of $\omega_i$', fontsize=FONT_SIZE)
+ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
+ax.yaxis.set_tick_params(labelsize=FONT_SIZE)
 plt.tight_layout()
 if SAVE_NOT_SHOW:
     plt.savefig('images/omegas_cmp.pgf')
@@ -176,7 +180,7 @@ sim_data['secure_fusion_estimates'] = [x for i,x in enumerate(sim_data['secure_f
 
 # Also change the figure size for this plot
 FIG_WIDTH = 3.4
-FIG_HIGHT = 3.4
+FIG_HIGHT = 2.4
 
 
 fig = plt.figure()
@@ -241,9 +245,11 @@ for i in range(len(estimates)):
     ax.scatter(*estimate, c='b', marker='.')
     ax.add_artist(ph.get_cov_ellipse(error, estimate, 2, fill=False, linestyle='-', edgecolor='b', zorder=4))
 
-plt.xlabel(r'Location $x$')
-plt.ylabel(r'Location $y$')
-plt.legend()
+plt.xlabel(r'Location $x$', fontsize=FONT_SIZE)
+plt.ylabel(r'Location $y$', fontsize=FONT_SIZE)
+plt.legend(fontsize=FONT_SIZE)
+ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
+ax.yaxis.set_tick_params(labelsize=FONT_SIZE)
 plt.tight_layout()
 if SAVE_NOT_SHOW:
     plt.savefig('images/fci_secfci_cmp.pgf')
