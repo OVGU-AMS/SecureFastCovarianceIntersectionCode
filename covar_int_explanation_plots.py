@@ -120,8 +120,9 @@ d8888        888   Y88b                 888    Y8P          888      d88P  Y88b 
 fig = plt.figure()
 fig.set_size_inches(w=FIG_WIDTH, h=FIG_HIGHT)
 ax = fig.add_subplot(111, projection='3d')
-#fig.suptitle(r'First partial solution')
-#ax.set_title(r'First Partial solution')
+
+# fig.suptitle(r'First partial solution')
+# ax.set_title(r'First Partial solution')
 
 ax.set_xlabel(r'$\omega_0$')
 ax.set_ylabel(r'$\omega_1$')
@@ -340,8 +341,9 @@ ax.scatter(*i, marker='o', c='r', zorder=10)
 solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2,0.2), marker = 'o')
 partialSol1FakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.2,0.7,0.2), marker = 'o')
 partialSol2FakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.2,0.2,0.7), marker = 'o')
-ax.legend([solutionSurfaceFakeLine, partialSol1FakeLine, partialSol2FakeLine], 
+l = ax.legend([solutionSurfaceFakeLine, partialSol1FakeLine, partialSol2FakeLine], 
           [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ solution plane', r'$\omega_1$, $\omega_2$ solution plane'], numpoints=1, loc=1, fontsize=FONT_SIZE)
+l.set_zorder(20)
 
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.yaxis.set_tick_params(labelsize=FONT_SIZE)
