@@ -89,7 +89,7 @@ ax.scatter([0.5*(l+r)],[0], marker='x', c='r', zorder=1, label=r'Approx. solutio
 
 #plt.ylim(bottom=0)
 
-plt.xlabel(r'$\omega$', fontsize=FONT_SIZE)
+plt.xlabel(r'$\omega_d$', fontsize=FONT_SIZE)
 #ax.set_title('Fast covariance intersection')
 
 plt.legend(fontsize=FONT_SIZE, numpoints=1)

@@ -137,7 +137,7 @@ diff = np.abs(np.array(split_omegas[0]) - np.array(split_approx_omegas[0])) + \
        np.abs(np.array(split_omegas[2]) - np.array(split_approx_omegas[2]))
 er, = ax.plot([i for i in range(len(diff))], diff, c='grey', marker='.')
 
-ax.legend([(fci1,fci2,fci3),(secFci1,secFci2,secFci3),er], [r'FCI $\omega_i$', r'SecFCI $\omega_i$', r'Error'], 
+ax.legend([(fci1,fci2,fci3),(secFci1,secFci2,secFci3),er], [r'FCI $\omega_i$', r'SecFCI $\omega_i$', r'Sum of Absolute Errors'], 
           numpoints=1, handler_map={tuple: HandlerTuple(ndivide=None)}, loc=1, fontsize=FONT_SIZE)
 
 plt.xlabel(r'Time', fontsize=FONT_SIZE)
