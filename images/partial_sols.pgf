@@ -481,7 +481,7 @@
 \pgfusepath{clip}%
 \pgfsetbuttcap%
 \pgfsetroundjoin%
-\definecolor{currentfill}{rgb}{0.350000,0.100000,0.100000}%
+\definecolor{currentfill}{rgb}{0.596451,0.170415,0.170415}%
 \pgfsetfillcolor{currentfill}%
 \pgfsetfillopacity{0.500000}%
 \pgfsetlinewidth{0.000000pt}%

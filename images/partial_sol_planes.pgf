@@ -470,7 +470,7 @@
 \pgfusepath{clip}%
 \pgfsetbuttcap%
 \pgfsetroundjoin%
-\definecolor{currentfill}{rgb}{0.350000,0.100000,0.100000}%
+\definecolor{currentfill}{rgb}{0.596451,0.170415,0.170415}%
 \pgfsetfillcolor{currentfill}%
 \pgfsetfillopacity{0.500000}%
 \pgfsetlinewidth{0.000000pt}%
@@ -488,7 +488,7 @@
 \pgfusepath{clip}%
 \pgfsetbuttcap%
 \pgfsetroundjoin%
-\definecolor{currentfill}{rgb}{0.100000,0.100000,0.350000}%
+\definecolor{currentfill}{rgb}{0.079856,0.079856,0.279496}%
 \pgfsetfillcolor{currentfill}%
 \pgfsetfillopacity{0.500000}%
 \pgfsetlinewidth{0.000000pt}%
@@ -506,7 +506,7 @@
 \pgfusepath{clip}%
 \pgfsetbuttcap%
 \pgfsetroundjoin%
-\definecolor{currentfill}{rgb}{0.200000,0.200000,0.700000}%
+\definecolor{currentfill}{rgb}{0.180144,0.180144,0.630504}%
 \pgfsetfillcolor{currentfill}%
 \pgfsetfillopacity{0.500000}%
 \pgfsetlinewidth{0.000000pt}%
@@ -524,7 +524,7 @@
 \pgfusepath{clip}%
 \pgfsetbuttcap%
 \pgfsetroundjoin%
-\definecolor{currentfill}{rgb}{0.100000,0.350000,0.100000}%
+\definecolor{currentfill}{rgb}{0.113566,0.397479,0.113566}%
 \pgfsetfillcolor{currentfill}%
 \pgfsetfillopacity{0.500000}%
 \pgfsetlinewidth{0.000000pt}%
@@ -542,7 +542,7 @@
 \pgfusepath{clip}%
 \pgfsetbuttcap%
 \pgfsetroundjoin%
-\definecolor{currentfill}{rgb}{0.200000,0.700000,0.200000}%
+\definecolor{currentfill}{rgb}{0.146434,0.512521,0.146434}%
 \pgfsetfillcolor{currentfill}%
 \pgfsetfillopacity{0.500000}%
 \pgfsetlinewidth{0.000000pt}%

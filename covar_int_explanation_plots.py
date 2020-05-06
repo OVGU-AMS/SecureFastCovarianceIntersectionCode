@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.tri as mtri
 
-SAVE_NOT_SHOW = False
+SAVE_NOT_SHOW = True
 
 if SAVE_NOT_SHOW:
     # Use to following to output latex friendly pictures. Note plt.show() will no longer work
