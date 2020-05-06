@@ -40,7 +40,7 @@ def omega_estimates(sensor_lists, step):
         # Find the remaing unknown partial solution hyperplane point - when all omega values (except for current and next sensor) are 0. log(p) run time.
         list_a = sensor_lists[i]
         list_b = list(reversed(sensor_lists[i+1]))
-        om = intersect_approx(list_a, list_b, step)
+        om = intersect_approx_bsearch(list_a, list_b, step)
         computed_point = np.array([0]*i + [om, 1-om] + [0]*(num_sensors-2-i))
 
         # Special case with 2 sensors, the computed point is in fact the solution list of omegas
@@ -99,7 +99,6 @@ def omega_estimates(sensor_lists, step):
 def intersect_approx(increasing_cmp_list, decreasing_cmp_list, step):
     curr_om = 0
     found_om = 0
-    # TODO make this run in log(p) instead of p steps
     for i in range(len(increasing_cmp_list)):
         if increasing_cmp_list[i] == decreasing_cmp_list[i]:
             found_om = curr_om
@@ -119,6 +118,40 @@ def intersect_approx(increasing_cmp_list, decreasing_cmp_list, step):
     # print()
 
     return found_om
+
+# Faster version of the above
+def intersect_approx_bsearch(l1, l2, discStep):
+    # l1 < l2 to start with always
+    startDiff = True
+        
+    interceptInd, approx = listIntersectSup(l1, l2, 0, startDiff)
+    if approx:
+        return (interceptInd - 0.5)*discStep
+    else:
+        return interceptInd*discStep
+
+def listIntersectSup(l1, l2, index, startDiff):
+    n = len(l1)
+
+    # Base case
+    if n == 1:
+        if l1[0] == l2[0]:
+            return (index, False)
+        elif (l1[0] < l2[0]) == startDiff:
+            return (index + 1, True)
+        elif (l1[0] < l2[0]) != startDiff:
+            return (index, True)
+    
+    # Single recurse go left or right depending on whether the sign has changed
+    mid = n//2
+    if l1[mid] == l2[mid]:
+        return (index + mid, False)
+    elif (l1[mid] < l2[mid]) == startDiff:
+        return listIntersectSup(l1[mid:], l2[mid:], index+mid, startDiff)
+    elif (l1[mid] < l2[mid]) != startDiff:
+        return listIntersectSup(l1[:mid], l2[:mid], index, startDiff)
+
+
 
 def intersect_exact(increasing_cmp_list, decreasing_cmp_list, step):
     # Don't need step for exact solution, pass it to keep signature akin to the approximation function

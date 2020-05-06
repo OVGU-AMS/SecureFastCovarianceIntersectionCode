@@ -119,7 +119,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=1.978809in,y=0.431555in,left,base,rotate=89.977274]{\color{textcolor}\rmfamily\fontsize{10.000000}{12.000000}\selectfont \(\displaystyle \omega_0\)}%
+\pgftext[x=1.978809in,y=0.431555in,left,base,rotate=89.977274]{\color{textcolor}\rmfamily\fontsize{10.000000}{12.000000}\selectfont \(\displaystyle \omega_1\)}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -223,7 +223,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=1.116577in,y=0.064398in,left,base,rotate=358.904058]{\color{textcolor}\rmfamily\fontsize{10.000000}{12.000000}\selectfont \(\displaystyle \omega_1\)}%
+\pgftext[x=1.116577in,y=0.064398in,left,base,rotate=358.904058]{\color{textcolor}\rmfamily\fontsize{10.000000}{12.000000}\selectfont \(\displaystyle \omega_2\)}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -327,7 +327,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=0.347307in,y=0.722441in,left,base,rotate=272.159656]{\color{textcolor}\rmfamily\fontsize{10.000000}{12.000000}\selectfont \(\displaystyle \omega_2\)}%
+\pgftext[x=0.347307in,y=0.722441in,left,base,rotate=272.159656]{\color{textcolor}\rmfamily\fontsize{10.000000}{12.000000}\selectfont \(\displaystyle \omega_3\)}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -481,7 +481,7 @@
 \pgfusepath{clip}%
 \pgfsetbuttcap%
 \pgfsetroundjoin%
-\definecolor{currentfill}{rgb}{0.596451,0.170415,0.170415}%
+\definecolor{currentfill}{rgb}{0.350000,0.100000,0.100000}%
 \pgfsetfillcolor{currentfill}%
 \pgfsetfillopacity{0.500000}%
 \pgfsetlinewidth{0.000000pt}%
@@ -599,7 +599,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=0.831024in,y=1.705181in,left,base]{\color{textcolor}\rmfamily\fontsize{8.330000}{9.996000}\selectfont \(\displaystyle \omega_0\), \(\displaystyle \omega_1\) partial solution}%
+\pgftext[x=0.831024in,y=1.705181in,left,base]{\color{textcolor}\rmfamily\fontsize{8.330000}{9.996000}\selectfont \(\displaystyle \omega_1\), \(\displaystyle \omega_2\) partial solution}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -616,7 +616,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=0.831024in,y=1.544742in,left,base]{\color{textcolor}\rmfamily\fontsize{8.330000}{9.996000}\selectfont \(\displaystyle \omega_1\), \(\displaystyle \omega_2\) partial solution}%
+\pgftext[x=0.831024in,y=1.544742in,left,base]{\color{textcolor}\rmfamily\fontsize{8.330000}{9.996000}\selectfont \(\displaystyle \omega_2\), \(\displaystyle \omega_3\) partial solution}%
 \end{pgfscope}%
 \end{pgfpicture}%
 \makeatother%

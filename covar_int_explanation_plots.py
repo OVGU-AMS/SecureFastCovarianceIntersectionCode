@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.tri as mtri
 
-SAVE_NOT_SHOW = True
+SAVE_NOT_SHOW = False
 
 if SAVE_NOT_SHOW:
     # Use to following to output latex friendly pictures. Note plt.show() will no longer work
@@ -77,8 +77,8 @@ l = w_steps[l]
 r = w_steps[r]
 
 
-ax.plot(w_steps, A, marker='.', c='g', label=r'$tr(P_0)\omega^{(x)}$', zorder=3)
-ax.plot(w_steps, B, marker='.', c='b', label=r'$tr(P_1)(1-\omega^{(x)})$', zorder=3)
+ax.plot(w_steps, A, marker='.', c='g', label=r'$tr(P_1)\omega^{(x)}$', zorder=3)
+ax.plot(w_steps, B, marker='.', c='b', label=r'$tr(P_2)(1-\omega^{(x)})$', zorder=3)
 #ax.plot([trB/(trA+trB), trB/(trA+trB)],[0, trB/(trA+trB)*trA], linestyle='--', c='r')
 #ax.scatter([trB/(trA+trB)],[trB/(trA+trB)*trA], marker='x', c='r', zorder=10)
 
@@ -124,9 +124,9 @@ ax = fig.add_subplot(111, projection='3d')
 # fig.suptitle(r'First partial solution')
 # ax.set_title(r'First Partial solution')
 
-ax.set_xlabel(r'$\omega_0$')
-ax.set_ylabel(r'$\omega_1$')
-ax.set_zlabel(r'$\omega_2$')
+ax.set_xlabel(r'$\omega_1$')
+ax.set_ylabel(r'$\omega_2$')
+ax.set_zlabel(r'$\omega_3$')
 ax.view_init(elev=35, azim=2)
 ax.dist = 12
 
@@ -146,7 +146,7 @@ sol1Line, = ax.plot([sol1, 0],[1-sol1, 0],[0, 1], linestyle='--', c='g')
 ax.scatter([sol1, 0],[1-sol1, 0],[0, 1], c='g', marker='x', depthshade=False)
 
 solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2,0.2), marker = 'o')
-l = ax.legend([solutionSurfaceFakeLine, sol1Line], [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ partial solution'], numpoints=1, loc=1, fontsize=FONT_SIZE)
+l = ax.legend([solutionSurfaceFakeLine, sol1Line], [r'$\omega_i$ solution space', r'$\omega_1$, $\omega_2$ partial solution'], numpoints=1, loc=1, fontsize=FONT_SIZE)
 
 # Move the legend up slightly
 bb = l.get_bbox_to_anchor().inverse_transformed(ax.transAxes)
@@ -189,9 +189,9 @@ ax = fig.add_subplot(111, projection='3d')
 #fig.suptitle(r'All partial solutions')
 #ax.set_title(r'All partial solutions')
 
-ax.set_xlabel(r'$\omega_0$')
-ax.set_ylabel(r'$\omega_1$')
-ax.set_zlabel(r'$\omega_2$')
+ax.set_xlabel(r'$\omega_1$')
+ax.set_ylabel(r'$\omega_2$')
+ax.set_zlabel(r'$\omega_3$')
 ax.view_init(elev=35, azim=2)
 ax.dist = 12
 
@@ -216,7 +216,7 @@ ax.scatter([0, 1],[sol2, 0],[1-sol2, 0], c='b', marker='x', depthshade=False)
 
 solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2,0.2), marker = 'o')
 l = ax.legend([solutionSurfaceFakeLine, sol1Line, sol2Line], 
-          [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ partial solution', r'$\omega_1$, $\omega_2$ partial solution'], numpoints=1, loc=1, fontsize=FONT_SIZE)
+          [r'$\omega_i$ solution space', r'$\omega_1$, $\omega_2$ partial solution', r'$\omega_2$, $\omega_3$ partial solution'], numpoints=1, loc=1, fontsize=FONT_SIZE)
 
 # Move the legend up slightly
 bb = l.get_bbox_to_anchor().inverse_transformed(ax.transAxes)
@@ -261,9 +261,9 @@ ax = fig.add_subplot(111, projection='3d')
 #fig.suptitle(r'Partial solutions as planes')
 #ax.set_title(r'Partial solutions as planes')
 
-ax.set_xlabel(r'$\omega_0$')
-ax.set_ylabel(r'$\omega_1$')
-ax.set_zlabel(r'$\omega_2$')
+ax.set_xlabel(r'$\omega_1$')
+ax.set_ylabel(r'$\omega_2$')
+ax.set_zlabel(r'$\omega_3$')
 ax.view_init(elev=35, azim=2)
 ax.dist = 12
 
@@ -364,7 +364,7 @@ solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2
 partialSol1FakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.2,0.7,0.2), marker = 'o')
 partialSol2FakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.2,0.2,0.7), marker = 'o')
 l = ax.legend([solutionSurfaceFakeLine, partialSol1FakeLine, partialSol2FakeLine], 
-          [r'$\omega_i$ solution space', r'$\omega_0$, $\omega_1$ solution plane', r'$\omega_1$, $\omega_2$ solution plane'], 
+          [r'$\omega_i$ solution space', r'$\omega_1$, $\omega_2$ solution plane', r'$\omega_2$, $\omega_3$ solution plane'], 
            numpoints=1,
            #loc=1,
            fontsize=FONT_SIZE)
