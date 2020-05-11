@@ -52,6 +52,8 @@ OMEGA_LIMIT_POINTS = 50
 
 
 """
+# Figure removed in revision
+
 fig = plt.figure()
 fig.set_size_inches(w=FIG_WIDTH, h=FIG_HIGHT)
 ax = fig.add_subplot(111)
@@ -132,12 +134,13 @@ secFci2, = ax.plot([i for i in range(len(split_approx_omegas[1]))], split_approx
 secFci3, = ax.plot([i for i in range(len(split_approx_omegas[2]))], split_approx_omegas[2], c=(0.4,0.4,0.9), marker='.')
 
 
-diff = np.abs(np.array(split_omegas[0]) - np.array(split_approx_omegas[0])) + \
-       np.abs(np.array(split_omegas[1]) - np.array(split_approx_omegas[1])) + \
-       np.abs(np.array(split_omegas[2]) - np.array(split_approx_omegas[2]))
+diff = np.sqrt((np.array(split_omegas[0]) - np.array(split_approx_omegas[0]))**2 + \
+               (np.array(split_omegas[1]) - np.array(split_approx_omegas[1]))**2 + \
+               (np.array(split_omegas[2]) - np.array(split_approx_omegas[2]))**2)
 er, = ax.plot([i for i in range(len(diff))], diff, c='grey', marker='.')
+erbound, = ax.plot([i for i in range(len(diff))], [np.sqrt(3*(omega_step_size/2.0)**2) for i in range(len(diff))], c='lightgrey', marker='', linestyle='--')
 
-ax.legend([(fci1,fci2,fci3),(secFci1,secFci2,secFci3),er], [r'FCI $\omega_i$', r'SecFCI $\omega_i$', r'Sum of Absolute Errors'], 
+ax.legend([(secFci1,secFci2,secFci3),(fci1,fci2,fci3),er,erbound], [r'$\omega_{i,SecFCI}$', r'$\omega_{i,FCI}$', r'$|\underline{\omega}_{FCI}-\underline{\omega}_{SecFCI}|$', r'Error Bound'], 
           numpoints=1, handler_map={tuple: HandlerTuple(ndivide=None)}, loc=1, fontsize=FONT_SIZE)
 
 plt.xlabel(r'Time', fontsize=FONT_SIZE)
