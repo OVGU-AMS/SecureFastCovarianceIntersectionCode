@@ -20,7 +20,8 @@ if SAVE_NOT_SHOW:
         'pgf.rcfonts': False,
     })
 
-FIG_WIDTH = 3.4
+#3.4 is the width of the column
+FIG_WIDTH = 3.2
 FIG_HIGHT = 1.7
 FONT_SIZE = 'small'
 
@@ -182,8 +183,8 @@ sim_data['fusion_estimates'] = [x for i,x in enumerate(sim_data['fusion_estimate
 sim_data['secure_fusion_estimates'] = [x for i,x in enumerate(sim_data['secure_fusion_estimates']) if i%TIME_BETWEEN_PLOTS==0][SKIP_FIRST:SKIP_FIRST+MAX_STEPS]
 
 # Also change the figure size for this plot
-FIG_WIDTH = 3.4
-FIG_HIGHT = 2.4
+FIG_WIDTH = 3.2
+FIG_HIGHT = 2.0
 
 
 fig = plt.figure()

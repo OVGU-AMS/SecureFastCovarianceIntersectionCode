@@ -560,21 +560,21 @@
 \pgfsetmiterjoin%
 \definecolor{currentfill}{rgb}{1.000000,1.000000,1.000000}%
 \pgfsetfillcolor{currentfill}%
-\pgfsetfillopacity{0.800000}%
+\pgfsetfillopacity{0.600000}%
 \pgfsetlinewidth{1.003750pt}%
 \definecolor{currentstroke}{rgb}{0.800000,0.800000,0.800000}%
 \pgfsetstrokecolor{currentstroke}%
-\pgfsetstrokeopacity{0.800000}%
+\pgfsetstrokeopacity{0.600000}%
 \pgfsetdash{}{0pt}%
-\pgfpathmoveto{\pgfqpoint{0.549624in}{1.476859in}}%
-\pgfpathlineto{\pgfqpoint{2.016014in}{1.476859in}}%
-\pgfpathquadraticcurveto{\pgfqpoint{2.039153in}{1.476859in}}{\pgfqpoint{2.039153in}{1.499998in}}%
-\pgfpathlineto{\pgfqpoint{2.039153in}{1.969744in}}%
-\pgfpathquadraticcurveto{\pgfqpoint{2.039153in}{1.992883in}}{\pgfqpoint{2.016014in}{1.992883in}}%
-\pgfpathlineto{\pgfqpoint{0.549624in}{1.992883in}}%
-\pgfpathquadraticcurveto{\pgfqpoint{0.526485in}{1.992883in}}{\pgfqpoint{0.526485in}{1.969744in}}%
-\pgfpathlineto{\pgfqpoint{0.526485in}{1.499998in}}%
-\pgfpathquadraticcurveto{\pgfqpoint{0.526485in}{1.476859in}}{\pgfqpoint{0.549624in}{1.476859in}}%
+\pgfpathmoveto{\pgfqpoint{0.549624in}{1.413411in}}%
+\pgfpathlineto{\pgfqpoint{2.016014in}{1.413411in}}%
+\pgfpathquadraticcurveto{\pgfqpoint{2.039153in}{1.413411in}}{\pgfqpoint{2.039153in}{1.436550in}}%
+\pgfpathlineto{\pgfqpoint{2.039153in}{1.906296in}}%
+\pgfpathquadraticcurveto{\pgfqpoint{2.039153in}{1.929435in}}{\pgfqpoint{2.016014in}{1.929435in}}%
+\pgfpathlineto{\pgfqpoint{0.549624in}{1.929435in}}%
+\pgfpathquadraticcurveto{\pgfqpoint{0.526485in}{1.929435in}}{\pgfqpoint{0.526485in}{1.906296in}}%
+\pgfpathlineto{\pgfqpoint{0.526485in}{1.436550in}}%
+\pgfpathquadraticcurveto{\pgfqpoint{0.526485in}{1.413411in}}{\pgfqpoint{0.549624in}{1.413411in}}%
 \pgfpathclose%
 \pgfusepath{stroke,fill}%
 \end{pgfscope}%
@@ -601,7 +601,7 @@
 \pgfusepath{stroke,fill}%
 }%
 \begin{pgfscope}%
-\pgfsys@transformshift{0.688458in}{1.906112in}%
+\pgfsys@transformshift{0.688458in}{1.842664in}%
 \pgfsys@useobject{currentmarker}{}%
 \end{pgfscope}%
 \end{pgfscope}%
@@ -609,7 +609,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=0.896707in,y=1.865619in,left,base]{\color{textcolor}\rmfamily\fontsize{8.330000}{9.996000}\selectfont \(\displaystyle \omega_i\) solution space}%
+\pgftext[x=0.896707in,y=1.802171in,left,base]{\color{textcolor}\rmfamily\fontsize{8.330000}{9.996000}\selectfont \(\displaystyle \omega_i\) solution space}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -634,7 +634,7 @@
 \pgfusepath{stroke,fill}%
 }%
 \begin{pgfscope}%
-\pgfsys@transformshift{0.688458in}{1.745674in}%
+\pgfsys@transformshift{0.688458in}{1.682226in}%
 \pgfsys@useobject{currentmarker}{}%
 \end{pgfscope}%
 \end{pgfscope}%
@@ -642,7 +642,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=0.896707in,y=1.705181in,left,base]{\color{textcolor}\rmfamily\fontsize{8.330000}{9.996000}\selectfont \(\displaystyle \omega_1\), \(\displaystyle \omega_2\) solution plane}%
+\pgftext[x=0.896707in,y=1.641733in,left,base]{\color{textcolor}\rmfamily\fontsize{8.330000}{9.996000}\selectfont \(\displaystyle \omega_1\), \(\displaystyle \omega_2\) solution plane}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -667,7 +667,7 @@
 \pgfusepath{stroke,fill}%
 }%
 \begin{pgfscope}%
-\pgfsys@transformshift{0.688458in}{1.585235in}%
+\pgfsys@transformshift{0.688458in}{1.521787in}%
 \pgfsys@useobject{currentmarker}{}%
 \end{pgfscope}%
 \end{pgfscope}%
@@ -675,7 +675,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=0.896707in,y=1.544742in,left,base]{\color{textcolor}\rmfamily\fontsize{8.330000}{9.996000}\selectfont \(\displaystyle \omega_2\), \(\displaystyle \omega_3\) solution plane}%
+\pgftext[x=0.896707in,y=1.481294in,left,base]{\color{textcolor}\rmfamily\fontsize{8.330000}{9.996000}\selectfont \(\displaystyle \omega_2\), \(\displaystyle \omega_3\) solution plane}%
 \end{pgfscope}%
 \end{pgfpicture}%
 \makeatother%

@@ -44,7 +44,7 @@ d88P"                 "888 88888888 888  888 "Y8888b. 888  888 888          888 
 """
 fig = plt.figure()
 # Overwrite size on this plot
-fig.set_size_inches(w=3.4, h=2)
+fig.set_size_inches(w=3.2, h=1.8)
 ax = fig.add_subplot(111)
 
 w_quant = 0.1
@@ -146,12 +146,13 @@ sol1Line, = ax.plot([sol1, 0],[1-sol1, 0],[0, 1], linestyle='--', c='g')
 ax.scatter([sol1, 0],[1-sol1, 0],[0, 1], c='g', marker='x', depthshade=False)
 
 solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2,0.2), marker = 'o')
-l = ax.legend([solutionSurfaceFakeLine, sol1Line], [r'$\omega_i$ solution space', r'$\omega_1$, $\omega_2$ partial solution'], numpoints=1, loc=1, fontsize=FONT_SIZE)
+l = ax.legend([solutionSurfaceFakeLine, sol1Line], [r'$\omega_i$ solution space', r'$\omega_1$, $\omega_2$ partial solution'], 
+numpoints=1, loc=1, fontsize=FONT_SIZE, framealpha=0.6)
 
 # Move the legend up slightly
 bb = l.get_bbox_to_anchor().inverse_transformed(ax.transAxes)
-bb.y0 += 0.15
-bb.y1 += 0.15
+bb.y0 += 0.11
+bb.y1 += 0.11
 l.set_bbox_to_anchor(bb, transform = ax.transAxes)
 
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
@@ -216,12 +217,13 @@ ax.scatter([0, 1],[sol2, 0],[1-sol2, 0], c='b', marker='x', depthshade=False)
 
 solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2,0.2), marker = 'o')
 l = ax.legend([solutionSurfaceFakeLine, sol1Line, sol2Line], 
-          [r'$\omega_i$ solution space', r'$\omega_1$, $\omega_2$ partial solution', r'$\omega_2$, $\omega_3$ partial solution'], numpoints=1, loc=1, fontsize=FONT_SIZE)
+          [r'$\omega_i$ solution space', r'$\omega_1$, $\omega_2$ partial solution', r'$\omega_2$, $\omega_3$ partial solution'], 
+          numpoints=1, loc=1, fontsize=FONT_SIZE, framealpha=0.6)
 
 # Move the legend up slightly
 bb = l.get_bbox_to_anchor().inverse_transformed(ax.transAxes)
-bb.y0 += 0.15
-bb.y1 += 0.15
+bb.y0 += 0.11
+bb.y1 += 0.11
 l.set_bbox_to_anchor(bb, transform = ax.transAxes)
 
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
@@ -367,14 +369,15 @@ l = ax.legend([solutionSurfaceFakeLine, partialSol1FakeLine, partialSol2FakeLine
           [r'$\omega_i$ solution space', r'$\omega_1$, $\omega_2$ solution plane', r'$\omega_2$, $\omega_3$ solution plane'], 
            numpoints=1,
            #loc=1,
-           fontsize=FONT_SIZE)
-# Fixes issue plotting planes over th legend
+           fontsize=FONT_SIZE, 
+           framealpha=0.6)
+# Fixes issue plotting planes over the legend
 l.set_zorder(20)
 
 # Move the legend up slightly
 bb = l.get_bbox_to_anchor().inverse_transformed(ax.transAxes)
-bb.y0 += 0.15
-bb.y1 += 0.15
+bb.y0 += 0.11
+bb.y1 += 0.11
 l.set_bbox_to_anchor(bb, transform = ax.transAxes)
 
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
