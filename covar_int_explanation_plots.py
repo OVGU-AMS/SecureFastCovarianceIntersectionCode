@@ -22,11 +22,12 @@ if SAVE_NOT_SHOW:
 else:
     SAVE_PICS = False
     SHOW_PICS = True
-
+#width 2.33
 FIG_WIDTH = 2.33
-FIG_HIGHT = 2.06
+FIG_HIGHT = 1.7
 
 FONT_SIZE = 'small'
+LEGEND_FONT_SIZE = 'x-small'
 
 
 """
@@ -44,7 +45,7 @@ d88P"                 "888 88888888 888  888 "Y8888b. 888  888 888          888 
 """
 fig = plt.figure()
 # Overwrite size on this plot
-fig.set_size_inches(w=3.2, h=1.8)
+fig.set_size_inches(w=3.2, h=1.35)
 ax = fig.add_subplot(111)
 
 w_quant = 0.1
@@ -92,9 +93,13 @@ ax.scatter([0.5*(l+r)],[0], marker='x', c='r', zorder=1, label=r'Approx. solutio
 plt.xlabel(r'$\omega^{(x)}$', fontsize=FONT_SIZE)
 #ax.set_title('Fast covariance intersection')
 
-plt.legend(fontsize=FONT_SIZE, numpoints=1)
+plt.legend(fontsize=LEGEND_FONT_SIZE, numpoints=1)
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.yaxis.set_tick_params(labelsize=FONT_SIZE)
+
+# Move the legend up slightly
+ax.xaxis.labelpad = 0
+
 plt.tight_layout()
 if SAVE_PICS:
     plt.savefig('images/2_sensors.pgf')
@@ -147,12 +152,12 @@ ax.scatter([sol1, 0],[1-sol1, 0],[0, 1], c='g', marker='x', depthshade=False)
 
 solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2,0.2), marker = 'o')
 l = ax.legend([solutionSurfaceFakeLine, sol1Line], [r'$\omega_i$ solution space', r'$\omega_1$, $\omega_2$ partial solution'], 
-numpoints=1, loc=1, fontsize=FONT_SIZE, framealpha=0.6)
+numpoints=1, loc=1, fontsize=LEGEND_FONT_SIZE, framealpha=0.6)
 
 # Move the legend up slightly
 bb = l.get_bbox_to_anchor().inverse_transformed(ax.transAxes)
-bb.y0 += 0.11
-bb.y1 += 0.11
+bb.y0 += 0.09
+bb.y1 += 0.09
 l.set_bbox_to_anchor(bb, transform = ax.transAxes)
 
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
@@ -161,6 +166,12 @@ ax.zaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.xaxis.set_ticks([0,0.5,1])
 ax.yaxis.set_ticks([0,0.5,1])
 ax.zaxis.set_ticks([0,0.5,1])
+
+# Make the axis labels slightly closer to the axis itself
+ax.xaxis.labelpad = 0
+ax.yaxis.labelpad = 0
+ax.zaxis.labelpad = 0
+
 plt.autoscale()
 if SAVE_PICS:
     plt.savefig('images/partial_sol1.pgf')
@@ -218,12 +229,12 @@ ax.scatter([0, 1],[sol2, 0],[1-sol2, 0], c='b', marker='x', depthshade=False)
 solutionSurfaceFakeLine = mpl.lines.Line2D([0],[0], linestyle="none", c=(0.7,0.2,0.2), marker = 'o')
 l = ax.legend([solutionSurfaceFakeLine, sol1Line, sol2Line], 
           [r'$\omega_i$ solution space', r'$\omega_1$, $\omega_2$ partial solution', r'$\omega_2$, $\omega_3$ partial solution'], 
-          numpoints=1, loc=1, fontsize=FONT_SIZE, framealpha=0.6)
+          numpoints=1, loc=1, fontsize=LEGEND_FONT_SIZE, framealpha=0.6)
 
 # Move the legend up slightly
 bb = l.get_bbox_to_anchor().inverse_transformed(ax.transAxes)
-bb.y0 += 0.11
-bb.y1 += 0.11
+bb.y0 += 0.09
+bb.y1 += 0.09
 l.set_bbox_to_anchor(bb, transform = ax.transAxes)
 
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
@@ -232,6 +243,12 @@ ax.zaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.xaxis.set_ticks([0,0.5,1])
 ax.yaxis.set_ticks([0,0.5,1])
 ax.zaxis.set_ticks([0,0.5,1])
+
+# Make the axis labels slightly closer to the axis itself
+ax.xaxis.labelpad = 0
+ax.yaxis.labelpad = 0
+ax.zaxis.labelpad = 0
+
 plt.autoscale()
 if SAVE_PICS:
     plt.savefig('images/partial_sols.pgf')
@@ -369,15 +386,15 @@ l = ax.legend([solutionSurfaceFakeLine, partialSol1FakeLine, partialSol2FakeLine
           [r'$\omega_i$ solution space', r'$\omega_1$, $\omega_2$ solution plane', r'$\omega_2$, $\omega_3$ solution plane'], 
            numpoints=1,
            #loc=1,
-           fontsize=FONT_SIZE, 
+           fontsize=LEGEND_FONT_SIZE, 
            framealpha=0.6)
 # Fixes issue plotting planes over the legend
 l.set_zorder(20)
 
 # Move the legend up slightly
 bb = l.get_bbox_to_anchor().inverse_transformed(ax.transAxes)
-bb.y0 += 0.11
-bb.y1 += 0.11
+bb.y0 += 0.09
+bb.y1 += 0.09
 l.set_bbox_to_anchor(bb, transform = ax.transAxes)
 
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
@@ -386,6 +403,12 @@ ax.zaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.xaxis.set_ticks([0,0.5,1])
 ax.yaxis.set_ticks([0,0.5,1])
 ax.zaxis.set_ticks([0,0.5,1])
+
+# Make the axis labels slightly closer to the axis itself
+ax.xaxis.labelpad = 0
+ax.yaxis.labelpad = 0
+ax.zaxis.labelpad = 0
+
 plt.autoscale()
 if SAVE_PICS:
     plt.savefig('images/partial_sol_planes.pgf')

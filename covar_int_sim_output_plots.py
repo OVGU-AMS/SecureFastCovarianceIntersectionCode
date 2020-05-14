@@ -19,10 +19,18 @@ if SAVE_NOT_SHOW:
         'text.usetex': True,
         'pgf.rcfonts': False,
     })
+else:
+    # Redundant from above, done so that local generation doesn't error with some latex text in legends
+    mpl.rcParams.update({
+        "pgf.texsystem": "pdflatex",
+        'font.family': 'serif',
+        'text.usetex': True,
+        'pgf.rcfonts': False,
+    })
 
 #3.4 is the width of the column
 FIG_WIDTH = 3.2
-FIG_HIGHT = 1.7
+FIG_HIGHT = 1.5
 FONT_SIZE = 'small'
 
 
@@ -139,7 +147,7 @@ diff = np.sqrt((np.array(split_omegas[0]) - np.array(split_approx_omegas[0]))**2
                (np.array(split_omegas[1]) - np.array(split_approx_omegas[1]))**2 + \
                (np.array(split_omegas[2]) - np.array(split_approx_omegas[2]))**2)
 er, = ax.plot([i for i in range(len(diff))], diff, c='grey', marker='.')
-erbound, = ax.plot([i for i in range(len(diff))], [np.sqrt(3*(omega_step_size/2.0)**2) for i in range(len(diff))], c='lightgrey', marker='', linestyle='--')
+erbound, = ax.plot([i for i in range(len(diff))], [np.sqrt(3*(omega_step_size/2.0)**2) for i in range(len(diff))], c='lightskyblue', marker='', linestyle='--')
 
 ax.legend([(secFci1,secFci2,secFci3),(fci1,fci2,fci3),er,erbound], [r'$\omega_{i,SecFCI}$', r'$\omega_{i,FCI}$', r'$|\underline{\omega}_{FCI}-\underline{\omega}_{SecFCI}|$', r'Error Bound'], 
           numpoints=1, handler_map={tuple: HandlerTuple(ndivide=None)}, loc=1, fontsize=FONT_SIZE)
@@ -148,6 +156,10 @@ plt.xlabel(r'Time', fontsize=FONT_SIZE)
 plt.ylabel(r'Values of $\omega_i$', fontsize=FONT_SIZE)
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.yaxis.set_tick_params(labelsize=FONT_SIZE)
+
+# Move the legend up slightly
+ax.xaxis.labelpad = 0
+
 plt.tight_layout()
 if SAVE_NOT_SHOW:
     plt.savefig('images/omegas_cmp.pgf')
@@ -184,7 +196,7 @@ sim_data['secure_fusion_estimates'] = [x for i,x in enumerate(sim_data['secure_f
 
 # Also change the figure size for this plot
 FIG_WIDTH = 3.2
-FIG_HIGHT = 2.0
+FIG_HIGHT = 1.7
 
 
 fig = plt.figure()
@@ -251,9 +263,13 @@ for i in range(len(estimates)):
 
 plt.xlabel(r'Location $x$', fontsize=FONT_SIZE)
 plt.ylabel(r'Location $y$', fontsize=FONT_SIZE)
-plt.legend(fontsize=FONT_SIZE)
+plt.legend(fontsize='x-small')
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.yaxis.set_tick_params(labelsize=FONT_SIZE)
+
+# Move the legend up slightly
+ax.xaxis.labelpad = 0
+
 plt.tight_layout()
 if SAVE_NOT_SHOW:
     plt.savefig('images/fci_secfci_cmp.pgf')
