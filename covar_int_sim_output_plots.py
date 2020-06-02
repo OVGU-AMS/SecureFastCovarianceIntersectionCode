@@ -134,25 +134,25 @@ approx_omegas = [fci.omega_estimates([[w*i for w in np.arange(0, 1+omega_step_si
 split_omegas = list(zip(*omegas))
 split_approx_omegas = list(zip(*approx_omegas))
 
-fci1, = ax.plot([i for i in range(len(split_omegas[0]))], split_omegas[0], c=(0.9,0,0), marker='.')
-fci2, = ax.plot([i for i in range(len(split_omegas[1]))], split_omegas[1], c=(0.9,0.2,0.2), marker='.')
-fci3, = ax.plot([i for i in range(len(split_omegas[2]))], split_omegas[2], c=(0.9,0.4,0.4), marker='.')
+fci1, = ax.plot([i*0.5 for i in range(len(split_omegas[0]))], split_omegas[0], c=(0.9,0,0), marker='.')
+fci2, = ax.plot([i*0.5 for i in range(len(split_omegas[1]))], split_omegas[1], c=(0.9,0.2,0.2), marker='.')
+fci3, = ax.plot([i*0.5 for i in range(len(split_omegas[2]))], split_omegas[2], c=(0.9,0.4,0.4), marker='.')
 
-secFci1, = ax.plot([i for i in range(len(split_approx_omegas[0]))], split_approx_omegas[0], c=(0,0,0.9), marker='.')
-secFci2, = ax.plot([i for i in range(len(split_approx_omegas[1]))], split_approx_omegas[1], c=(0.2,0.2,0.9), marker='.')
-secFci3, = ax.plot([i for i in range(len(split_approx_omegas[2]))], split_approx_omegas[2], c=(0.4,0.4,0.9), marker='.')
+secFci1, = ax.plot([i*0.5 for i in range(len(split_approx_omegas[0]))], split_approx_omegas[0], c=(0,0,0.9), marker='.')
+secFci2, = ax.plot([i*0.5 for i in range(len(split_approx_omegas[1]))], split_approx_omegas[1], c=(0.2,0.2,0.9), marker='.')
+secFci3, = ax.plot([i*0.5 for i in range(len(split_approx_omegas[2]))], split_approx_omegas[2], c=(0.4,0.4,0.9), marker='.')
 
 
 diff = np.sqrt((np.array(split_omegas[0]) - np.array(split_approx_omegas[0]))**2 + \
                (np.array(split_omegas[1]) - np.array(split_approx_omegas[1]))**2 + \
                (np.array(split_omegas[2]) - np.array(split_approx_omegas[2]))**2)
-er, = ax.plot([i for i in range(len(diff))], diff, c='grey', marker='.')
-erbound, = ax.plot([i for i in range(len(diff))], [np.sqrt(3*(omega_step_size/2.0)**2) for i in range(len(diff))], c='lightskyblue', marker='', linestyle='--')
+er, = ax.plot([i*0.5 for i in range(len(diff))], diff, c='grey', marker='.')
+erbound, = ax.plot([i*0.5 for i in range(len(diff))], [np.sqrt(3*(omega_step_size/2.0)**2) for i in range(len(diff))], c='lightskyblue', marker='', linestyle='--')
 
 ax.legend([(secFci1,secFci2,secFci3),(fci1,fci2,fci3),er,erbound], [r'$\omega_{i,SecFCI}$', r'$\omega_{i,FCI}$', r'$|\underline{\omega}_{FCI}-\underline{\omega}_{SecFCI}|$', r'Error Bound'], 
           numpoints=1, handler_map={tuple: HandlerTuple(ndivide=None)}, loc=1, fontsize=FONT_SIZE)
 
-plt.xlabel(r'Time', fontsize=FONT_SIZE)
+plt.xlabel(r'Time (s)', fontsize=FONT_SIZE)
 plt.ylabel(r'Values of $\omega_i$', fontsize=FONT_SIZE)
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.yaxis.set_tick_params(labelsize=FONT_SIZE)
@@ -261,8 +261,8 @@ for i in range(len(estimates)):
     ax.scatter(*estimate, c='b', marker='.')
     ax.add_artist(ph.get_cov_ellipse(error, estimate, 2, fill=False, linestyle='-', edgecolor='b', zorder=4))
 
-plt.xlabel(r'Location $x$', fontsize=FONT_SIZE)
-plt.ylabel(r'Location $y$', fontsize=FONT_SIZE)
+plt.xlabel(r'Location $x$ (m)', fontsize=FONT_SIZE)
+plt.ylabel(r'Location $y$ (m)', fontsize=FONT_SIZE)
 plt.legend(fontsize='x-small')
 ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.yaxis.set_tick_params(labelsize=FONT_SIZE)
