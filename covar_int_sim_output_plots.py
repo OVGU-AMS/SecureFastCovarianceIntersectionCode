@@ -89,7 +89,7 @@ ax.xaxis.set_tick_params(labelsize=FONT_SIZE)
 ax.yaxis.set_tick_params(labelsize=FONT_SIZE)
 plt.tight_layout()
 if SAVE_NOT_SHOW:
-    plt.savefig('images/traces_cmp.pgf')
+    plt.savefig('images/traces_cmp.pdf')
 else:
     plt.show()
 plt.close()
@@ -162,7 +162,7 @@ ax.xaxis.labelpad = 0
 
 plt.tight_layout()
 if SAVE_NOT_SHOW:
-    plt.savefig('images/omegas_cmp.pgf')
+    plt.savefig('images/omegas_cmp.pdf')
 else:
     plt.show()
 plt.close()
@@ -272,7 +272,7 @@ ax.xaxis.labelpad = 0
 
 plt.tight_layout()
 if SAVE_NOT_SHOW:
-    plt.savefig('images/fci_secfci_cmp.pgf')
+    plt.savefig('images/fci_secfci_cmp.pdf')
 else:
     plt.show()
 plt.close()

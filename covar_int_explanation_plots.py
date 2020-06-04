@@ -102,7 +102,7 @@ ax.xaxis.labelpad = 0
 
 plt.tight_layout()
 if SAVE_PICS:
-    plt.savefig('images/2_sensors.pgf')
+    plt.savefig('images/2_sensors.pdf')
 if SHOW_PICS:
     plt.show()
 plt.close()
@@ -174,7 +174,7 @@ ax.zaxis.labelpad = 0
 
 plt.autoscale()
 if SAVE_PICS:
-    plt.savefig('images/partial_sol1.pgf')
+    plt.savefig('images/partial_sol1.pdf')
 if SHOW_PICS:
     plt.show()
 plt.close()
@@ -251,7 +251,7 @@ ax.zaxis.labelpad = 0
 
 plt.autoscale()
 if SAVE_PICS:
-    plt.savefig('images/partial_sols.pgf')
+    plt.savefig('images/partial_sols.pdf')
 if SHOW_PICS:
     plt.show()
 plt.close()
@@ -411,7 +411,7 @@ ax.zaxis.labelpad = 0
 
 plt.autoscale()
 if SAVE_PICS:
-    plt.savefig('images/partial_sol_planes.pgf')
+    plt.savefig('images/partial_sol_planes.pdf')
 if SHOW_PICS:
     plt.show()
 plt.close()
